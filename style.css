@@ -1,0 +1,60 @@
+body{
+    background-color: rgb(127, 177, 160);
+   
+}
+.head{
+    font-size: 100px;
+    font-weight: 700;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 95px;
+
+}
+#tag{
+    font-size: 40px;
+    font-weight: 200;
+    text-align: center;
+    font-style: italic;
+    padding-top: 20px;
+
+}
+
+.score{
+    display: flex;
+    text-align: center;
+    font-weight: 300;
+    gap: 500px;
+    font-size: 7000px;
+    align-items: center;
+}
+
+
+.choices{
+    display: flex;
+    gap: 85px;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    perspective: 1000px;
+    margin-top: 100px;
+    padding-top: 100px;
+}
+
+.choice{
+    cursor: pointer
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+img{
+    width: 300px;
+    height: 300px;
+}
+.choice:hover img{
+    transform: rotateY(180deg);
+}
+
+#result{
+    font-size: 80px;
+    margin-top: 20px;
+}

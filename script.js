@@ -1,5 +1,18 @@
 
 
+const resultDiv = document.getElementById("result");
+
+const scoreDiv = document.getElementById("score");
+
+const tagLine = document.getElementById("tag");
+
+
+
+
+let playerScore = 0;
+let computerScore = 0;
+let round = 1;
+
 
 function getComputerChoice(){
     let choices = ["Rock", "Paper", "Scissors"];
@@ -9,72 +22,14 @@ function getComputerChoice(){
 
 
 
-function getHumanchoice(){
 
-    let choice = prompt("Enter Your Choice: ");
+function playGame(humanSelection){
+    tagLine.style.display = "none";
 
-    if (choice == null){
-        alert("you have cancelled");
-        return null;
+    if (round > 5) {
         
+        return
     }
-
-
-    choice = choice.charAt(0).toUpperCase() + choice.slice(1).toLowerCase();
-
-    if (choice === "Rock" || choice === "Paper" || choice === "Scissors"){
-        return choice;
-    }
-    else{
-        return getHumanchoice();
-    }
-    
-}
-
-
-
-
-
-function playRound(humanChoice, computerChoice){
-    
-    if (humanChoice === computerChoice){
-        return "Tie";
-    }
-    
-    else if(
-        (humanChoice == "Rock" && computerChoice == "Scissors")||
-         (humanChoice == "Paper" && computerChoice == "Rock")||
-         (humanChoice == "Scissors" && computerChoice == "Paper")
-    ){
-        return "Win";
-    
-    }
-     
-    else {
-        return "Lose";
-        
-    }
-
-    
-
-}
-
-
-function playGame(){
-
-    let humanScore = 0;
-    let computerScore = 0;
-
-   for(let round = 1; round <=5; round++){
-     console.log(`Round: ${round}`);
-    
-    
-
-
-const humanSelection = getHumanchoice();
-if(humanSelection == null){
-    return "Game Cancelled";
- }
 
 
 const computerSelection = getComputerChoice();
@@ -82,37 +37,89 @@ const computerSelection = getComputerChoice();
 
 
 
-console.log(`You chose: ${humanSelection}`);
-console.log(`Computer chose: ${computerSelection}`);
 
-let result = playRound(humanSelection, computerSelection);
 
-if (result == "Win"){
-    humanScore++;
-    console.log("You Win This Round");
-} 
-else if (result == "Lose") {
-    computerScore++;
-    console.log("You Lost This Round");
-}
-else {
-    console.log("It's a Tie!");
+
+resultDiv.innerHTML = `You chose: ${humanSelection} <br>  Computer chose: ${computerSelection}`;
+
+let result = "";
+
+
+    
+    if (humanSelection === computerSelection){
+        result = "it's a Tie";
+    }
+    
+    else if(
+        (humanSelection== "Rock" && computerSelection == "Scissors")||
+         (humanSelection == "Paper" && computerSelection == "Rock")||
+         (humanSelection == "Scissors" && computerSelection == "Paper")
+    ){
+        result = " you Win";
+        playerScore++;
+    
+    }
+     
+    else {
+        result = " you Lose";
+        computerScore++;
+        
+    }
+
+    
+    resultDiv.innerHTML = `
+        <strong>Round ${round}</strong><br>
+        You chose: ${humanSelection} <br>
+        Computer chose: ${computerSelection} <br>
+        ${result}
+    `;
+
+   
+        scoreDiv.innerHTML = `
+    <div style="text-align: center; font-size: 50px;">
+        Score<br>
+        You: ${playerScore} | Computer: ${computerScore}
+    </div>
+`;
+
+    
+
+    if (round === 5) {
+        let finalResult = "";
+
+        if (playerScore > computerScore) {
+            finalResult = "🎉 You won the game!";
+        } else if (playerScore < computerScore) {
+            finalResult = "😞 You lost the game!";
+        } else {
+            finalResult = "🤝 It's a tie!";
+        }
+
+        resultDiv.innerHTML += `<br><br><strong>${finalResult}</strong><br> Game over`;
+       
+    }
+
+    round++;
 }
 
-console.log(`Round ${round} Score: \n You :- ${humanScore} \n Computer :- ${computerScore}`);
-}
 
-console.log(`\n FINAL SCORE🏆 \n You:- ${humanScore} \n Computer:- ${computerScore}`);
-if(humanScore > computerScore){
-    return " Yay!!🎉🎉 You are the Overall Winner";
-}
-else if(computerScore > humanScore){
-    return "😢 Tough match! The computer wins this time. Try again Fren!";
-}
-else{
-    return "This Was a Strong Match! It's a Tie.";
-}
+
+
+
+document.getElementById("rockChoice").addEventListener('click', function(){
+    playGame("Rock");
+   
+   
 
 }
+)
+document.getElementById("paperChoice").addEventListener('click', function(){
+    playGame("Paper");
 
-console.log(playGame());
+}
+)
+document.getElementById("scissorsChoice").addEventListener('click', function(){
+    playGame("Scissors");
+
+}
+)
